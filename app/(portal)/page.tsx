@@ -7,14 +7,15 @@ import { SiteHeader } from "@/components/dashboard/site-header";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-import { columns, Item } from "./_components/columns";
-import { DataTable } from "./_components/data-table";
+import { columns} from "./corridas/_components/columns";
+import { DataTable } from "../../components/data-table";
+import { Item } from "./_components/columns";
 
 export const mockupStats: DashboardStats = {
   netProfit: {
-    value: 200.50,
-    percentage: 10,
-    trend: 1,
+    value: 200.5,
+    percentage: -10,
+    trend: -1,
   },
   totalEarnings: {
     value: 400.78,
@@ -81,6 +82,21 @@ export default function Page() {
       observacoes: "Lava-jato do centro",
       data: "2024-01-16T16:15:00",
     },
+    {
+      id: 5,
+      type: "corrida",
+      partida: "Residência",
+      destino: "Trabalho",
+      valor: 20.0,
+      distancia: 7.0,
+      pagamento: "Cartão",
+      data: "2024-01-17T07:50:00",
+    },
+  ];
+
+  const ridesBreadcrumbs = [
+    { label: "SOS-Cab", href: "/" },
+    { label: "Dashboard", href: "/", isCurrentPage: true },
   ];
 
   return (

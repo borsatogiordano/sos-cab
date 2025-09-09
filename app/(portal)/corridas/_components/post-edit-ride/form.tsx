@@ -21,6 +21,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import MoneyInput from "@/components/ui/money-input";
+import DistanceInput from "@/components/ui/distance-input";
+import { toast } from "sonner";
 
 export interface RideFormProps {
   initialData?: {
@@ -118,50 +121,18 @@ export default function RideForm({
           )}
         />
 
-        <FormField
-          control={form.control}
+        <MoneyInput
+          form={form}
           name="valor"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Valor da Corrida (R$) *</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  placeholder="0,00"
-                  {...field}
-                  onChange={(e) =>
-                    field.onChange(parseFloat(e.target.value) || 0)
-                  }
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          label="Valor da Corrida (R$) *"
+          placeholder="0,00"
         />
 
-        <FormField
-          control={form.control}
+        <DistanceInput
+          form={form}
           name="distancia"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Distância (km) *</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  min="0"
-                  step="0.1"
-                  placeholder="0,0"
-                  {...field}
-                  onChange={(e) =>
-                    field.onChange(parseFloat(e.target.value) || 0)
-                  }
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          label="Distância (km) *"
+          placeholder="0,0 km"
         />
 
         <FormField
@@ -207,7 +178,9 @@ export default function RideForm({
           )}
         />
 
-        <Button type="submit" className="w-full">
+        <Button onClick={() => {
+            toast.success(formType === "post" ? "Corrida registrada com sucesso!" : "Corrida atualizada com sucesso!");
+        }} type="submit" className="w-full">
           {formType === "post" ? "Registrar Corrida" : "Atualizar Corrida"}
         </Button>
       </form>

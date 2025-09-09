@@ -55,8 +55,8 @@ const getTrendIcon = (trend: number) => {
   return IconTrendingUp2;
 };
 
-const getBadgeVariant = (trend: number) => {
-  return trend < 0 ? "destructive" : "secondary";
+const getTrendColor = (percentage: number) => {
+  return percentage < 0 ? "text-destructive" : "text-chart-2";
 };
 
 interface SectionCardsProps {
@@ -85,8 +85,13 @@ export function SectionCards({ stats }: SectionCardsProps) {
             {formatCurrency(stats.netProfit.value)}
           </CardTitle>
           <CardAction>
-            <Badge variant={getBadgeVariant(stats.netProfit.trend)}>
-              <TrendIconNetProfit />
+            <Badge
+              variant={"secondary"}
+              className={`text-xs ${getTrendColor(stats.netProfit.percentage)}`}
+            >
+              <TrendIconNetProfit
+                className={getTrendColor(stats.netProfit.percentage)}
+              />
               {stats.netProfit.percentage > 0 ? "+" : ""}
               {stats.netProfit.percentage}%
             </Badge>
@@ -106,8 +111,15 @@ export function SectionCards({ stats }: SectionCardsProps) {
             {formatCurrency(stats.totalEarnings.value)}
           </CardTitle>
           <CardAction>
-            <Badge variant={getBadgeVariant(stats.totalEarnings.trend)}>
-              <TrendIconEarnings />
+            <Badge
+              variant={"secondary"}
+              className={`text-xs ${getTrendColor(
+                stats.totalEarnings.percentage
+              )}`}
+            >
+              <TrendIconEarnings
+                className={getTrendColor(stats.totalEarnings.percentage)}
+              />
               {stats.totalEarnings.percentage > 0 ? "+" : ""}
               {stats.totalEarnings.percentage}%
             </Badge>
@@ -127,8 +139,15 @@ export function SectionCards({ stats }: SectionCardsProps) {
             {formatCurrency(stats.totalExpenses.value)}
           </CardTitle>
           <CardAction>
-            <Badge variant={getBadgeVariant(stats.totalExpenses.trend)}>
-              <TrendIconExpenses />
+            <Badge
+              variant={"secondary"}
+              className={`text-xs ${getTrendColor(
+                stats.totalExpenses.percentage
+              )}`}
+            >
+              <TrendIconExpenses
+                className={getTrendColor(stats.totalExpenses.percentage)}
+              />
               {stats.totalExpenses.percentage > 0 ? "+" : ""}
               {stats.totalExpenses.percentage}%
             </Badge>
@@ -148,8 +167,15 @@ export function SectionCards({ stats }: SectionCardsProps) {
             {stats.totalRides.value}
           </CardTitle>
           <CardAction>
-            <Badge variant={getBadgeVariant(stats.totalRides.trend)}>
-              <TrendIconRides />
+            <Badge
+              variant={"secondary"}
+              className={`text-xs ${getTrendColor(
+                stats.totalRides.percentage
+              )}`}
+            >
+              <TrendIconRides
+                className={getTrendColor(stats.totalRides.percentage)}
+              />
               {stats.totalRides.percentage > 0 ? "+" : ""}
               {stats.totalRides.percentage}%
             </Badge>
