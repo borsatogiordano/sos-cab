@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import {
@@ -21,6 +21,18 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
+export interface RideFormProps {
+  initialData?: {
+    partida: string;
+    destino: string;
+    valor: number;
+    distancia: number;
+    pagamento: "dinheiro" | "cartao" | "pix";
+    observacoes?: string;
+  };
+  formType?: "post" | "put";
+}
 
 const paymentOptions = [
   { value: "dinheiro", label: "Dinheiro" },
@@ -45,130 +57,137 @@ const rideFormSchema = z.object({
 
 type RideFormData = z.infer<typeof rideFormSchema>;
 
-export default function RideForm() {
+export default function RideForm({
+  initialData,
+  formType = "post",
+}: RideFormProps) {
   const form = useForm<RideFormData>({
     resolver: zodResolver(rideFormSchema),
     defaultValues: {
-      partida: "",
-      destino: "",
-      valor: 0,
-      distancia: 0,
-      pagamento: "dinheiro",
-      observacoes: "",
+      partida: initialData?.partida || "",
+      destino: initialData?.destino || "",
+      valor: initialData?.valor || 0,
+      distancia: initialData?.distancia || 0,
+      pagamento: initialData?.pagamento || "dinheiro",
+      observacoes: initialData?.observacoes || "",
     },
   });
 
   const onSubmit = (data: RideFormData) => {
     console.log("Form submitted:", data);
+    console.log("Form type:", formType);
+
+    if (formType === "post") {
+      console.log("Criando nova corrida...");
+    } else {
+      console.log("Editando corrida...");
+    }
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <FormField
-            control={form.control}
-            name="partida"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Local de Partida *</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Ex: Centro, Rua das Flores, 123"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <FormField
+          control={form.control}
+          name="partida"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Local de Partida *</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Ex: Centro, Rua das Flores, 123"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-          <FormField
-            control={form.control}
-            name="destino"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Local de Destino *</FormLabel>
-                <FormControl>
-                  <Input placeholder="Ex: Aeroporto Internacional" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <FormField
+          control={form.control}
+          name="destino"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Local de Destino *</FormLabel>
+              <FormControl>
+                <Input placeholder="Ex: Aeroporto Internacional" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-          <FormField
-            control={form.control}
-            name="valor"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Valor da Corrida (R$) *</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    placeholder="0,00"
-                    {...field}
-                    onChange={(e) =>
-                      field.onChange(parseFloat(e.target.value) || 0)
-                    }
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <FormField
+          control={form.control}
+          name="valor"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Valor da Corrida (R$) *</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  placeholder="0,00"
+                  {...field}
+                  onChange={(e) =>
+                    field.onChange(parseFloat(e.target.value) || 0)
+                  }
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-          <FormField
-            control={form.control}
-            name="distancia"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Distância (km) *</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    min="0"
-                    step="0.1"
-                    placeholder="0,0"
-                    {...field}
-                    onChange={(e) =>
-                      field.onChange(parseFloat(e.target.value) || 0)
-                    }
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <FormField
+          control={form.control}
+          name="distancia"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Distância (km) *</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  min="0"
+                  step="0.1"
+                  placeholder="0,0"
+                  {...field}
+                  onChange={(e) =>
+                    field.onChange(parseFloat(e.target.value) || 0)
+                  }
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-          <FormField
-            control={form.control}
-            name="pagamento"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Forma de Pagamento *</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Selecione uma forma de pagamento" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {paymentOptions.map((opt) => (
-                      <SelectItem key={opt.value} value={opt.value}>
-                        {opt.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <FormField
+          control={form.control}
+          name="pagamento"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Forma de Pagamento *</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Selecione uma forma de pagamento" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {paymentOptions.map((opt) => (
+                    <SelectItem key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}
@@ -189,7 +208,7 @@ export default function RideForm() {
         />
 
         <Button type="submit" className="w-full">
-          Registrar Corrida
+          {formType === "post" ? "Registrar Corrida" : "Atualizar Corrida"}
         </Button>
       </form>
     </Form>
