@@ -20,6 +20,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { CarTaxiFront } from "lucide-react";
 
 const data = {
   user: {
@@ -62,7 +63,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <a href="#">
-                <IconInnerShadowTop className="!size-5" />
+                <CarTaxiFront />
                 <span className="text-base font-semibold">SosCab</span>
               </a>
             </SidebarMenuButton>

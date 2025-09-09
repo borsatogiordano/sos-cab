@@ -17,7 +17,6 @@ type TextInputProps = {
   placeholder: string;
 };
 
-// Brazilian currency config
 const moneyFormatter = Intl.NumberFormat("pt-BR", {
   currency: "BRL",
   currencyDisplay: "symbol",

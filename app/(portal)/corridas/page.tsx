@@ -3,7 +3,7 @@ import { SectionCards } from "@/app/(portal)/_components/section-cards";
 import { SiteHeader } from "@/components/dashboard/site-header";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { DialogForm } from "@/components/dialog-form";
-import RideForm from "./_components/post-edit-ride/form";
+import RideForm from "../../../components/forms/post-edit-ride/form";
 import { BadgePlus } from "lucide-react";
 import { mockupStats } from "../page";
 import { DataTable } from "../../../components/data-table";
