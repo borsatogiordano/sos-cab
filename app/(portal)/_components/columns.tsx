@@ -155,7 +155,7 @@ export const columns: ColumnDef<Item>[] = [
     accessorKey: "valor",
     header: () => <div className="text-left">Valor</div>,
     cell: ({ row }) => (
-      <ValueCell  value={row.original.valor} type={row.original.type} />
+      <ValueCell value={row.original.valor} type={row.original.type} />
     ),
   },
   {
