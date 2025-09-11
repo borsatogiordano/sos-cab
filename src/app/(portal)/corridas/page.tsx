@@ -3,9 +3,9 @@ import { SectionCards } from "@/src/app/(portal)/_components/section-cards";
 import { SiteHeader } from "@/src/components/dashboard/site-header";
 import { ScrollArea } from "@/src/components/ui/scroll-area";
 import { DialogForm } from "@/src/components/dialog-form";
-import RideForm from "../../../src/components/forms/post-edit-ride/post-edit-ride";
+import RideForm from "../../../components/forms/post-edit-ride/post-edit-ride";
 import { BadgePlus } from "lucide-react";
-import { DataTable } from "../../../src/components/data-table";
+import { DataTable } from "../../../components/data-table";
 import { columns, Gasto } from "./_components/columns";
 import { mockupStats } from "../_components/page/dashboardPage";
 

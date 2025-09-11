@@ -1,0 +1,81 @@
+"use client";
+
+import * as React from "react";
+import {
+  IconCar,
+  IconCurrencyDollar,
+  IconFileAnalytics,
+  IconHome,
+  IconInnerShadowTop,
+} from "@tabler/icons-react";
+
+import { NavMain } from "@/src/components/dashboard/nav-main";
+import { NavUser } from "@/src/components/dashboard/nav-user";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/src/components/ui/sidebar";
+import { CarTaxiFront } from "lucide-react";
+
+const data = {
+  user: {
+    name: "Giordano Borsato",
+    email: "borsatogiordano@gmail.com",
+    avatar: "https://github.com/borsatogiordano.png",
+  },
+  navMain: [
+    {
+      title: "Home",
+      url: "/",
+      icon: IconHome,
+    },
+    {
+      title: "Corridas",
+      url: "/corridas",
+      icon: IconCar,
+    },
+    {
+      title: "Gastos",
+      url: "#",
+      icon: IconCurrencyDollar,
+    },
+    {
+      title: "Relatórios",
+      url: "#",
+      icon: IconFileAnalytics,
+    },
+  ],
+};
+
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  return (
+    <Sidebar collapsible="offcanvas" {...props}>
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              className="data-[slot=sidebar-menu-button]:!p-1.5"
+            >
+              <a href="#">
+                <CarTaxiFront />
+                <span className="text-base font-semibold">SosCab</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+      <SidebarContent>
+        <NavMain items={data.navMain} />
+      </SidebarContent>
+      <SidebarFooter>
+        <NavUser user={data.user} />
+      </SidebarFooter>
+    </Sidebar>
+  );
+}
