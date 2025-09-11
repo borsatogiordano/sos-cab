@@ -6,8 +6,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+} from "./form";
+import { Input } from "./input";
 import { UseFormReturn } from "react-hook-form";
 
 type DistanceInputProps = {

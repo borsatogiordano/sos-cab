@@ -51,8 +51,8 @@ function DragHandle({ id }: { id: number }) {
 
 function ValueCell({ value }: { value: number }) {
   return (
-    <div className="text-left font-medium text-destructive">
-      -
+    <div className="text-left font-medium text-chart-2">
+      + 
       {new Intl.NumberFormat("pt-BR", {
         style: "currency",
         currency: "BRL",

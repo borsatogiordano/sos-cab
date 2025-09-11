@@ -3,11 +3,11 @@ import { SectionCards } from "@/app/(portal)/_components/section-cards";
 import { SiteHeader } from "@/components/dashboard/site-header";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { DialogForm } from "@/components/dialog-form";
-import RideForm from "../../../components/forms/post-edit-ride/form";
+import RideForm from "../../../components/forms/post-edit-ride/post-edit-ride";
 import { BadgePlus } from "lucide-react";
-import { mockupStats } from "../page";
 import { DataTable } from "../../../components/data-table";
 import { columns, Gasto } from "./_components/columns";
+import { mockupStats } from "../_components/page/dashboardPage";
 
 export default function Page() {
   const gastos: Gasto[] = [
@@ -112,7 +112,35 @@ export default function Page() {
       observacoes: "Cliente pediu recibo",
       data: "2025-09-07",
     },
+    {
+      id: 11,
+      partida: "Parque",
+      destino: "Museu",
+      distancia: 5.4,
+      descricao: "Passeio cultural",
+      categoria: "Corrida",
+      valor: 30.0,
+      pagamento: "Dinheiro",
+      observacoes: "Cliente muito interessado em arte",
+      data: "2025-09-08",
+    },
   ];
+
+  const TableButtons = () => {
+    return (
+      <DialogForm
+        form={<RideForm />}
+        title="Registrar Corrida"
+        description="Preencha os dados da corrida"
+        buttonText={
+          <>
+            <BadgePlus />
+            Registrar nova corrida
+          </>
+        }
+      />
+    );
+  };
 
   return (
     <section className="h-full flex flex-1 flex-col p-1">
@@ -122,22 +150,14 @@ export default function Page() {
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
               <SectionCards stats={mockupStats} />
-              <div className="px-4 lg:px-6">
-                <DialogForm
-                  form={<RideForm />}
-                  title="Registrar Corrida"
-                  description="Preencha os dados da corrida"
-                  buttonText={
-                    <>
-                      <BadgePlus />
-                      Registrar nova corrida
-                    </>
-                  }
-                />
-              </div>
+              <div className="px-4 lg:px-6"></div>
             </div>
             <div className="px-4 lg:px-6">
-              <DataTable data={gastos} columns={columns} />
+              <DataTable
+                otherButtons={TableButtons}
+                data={gastos}
+                columns={columns}
+              />
             </div>
           </div>
         </div>
