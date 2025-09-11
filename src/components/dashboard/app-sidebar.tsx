@@ -41,7 +41,7 @@ const data = {
     },
     {
       title: "Gastos",
-      url: "#",
+      url: "/gastos",
       icon: IconCurrencyDollar,
     },
     {

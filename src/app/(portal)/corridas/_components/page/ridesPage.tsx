@@ -503,8 +503,8 @@ export function RidesPage() {
     <section className="h-full flex flex-1 flex-col p-1">
       <SiteHeader />
       <ScrollArea className="h-[94dvh] p-2">
-        <div className="flex flex-1 flex-col">
-          <div className="@container/main flex flex-1 flex-col gap-2">
+        <div className="flex flex-1 flex-col mt-6">
+          <div className="@container/main flex flex-1 flex-col gap-6">
             <SectionCards stats={mockupStats} />
             <div className="px-4 lg:px-6">
               <DataTable
