@@ -22,8 +22,6 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
 } from "@/src/components/ui/dropdown-menu";
 import {
   Select,
@@ -69,7 +67,7 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     initialState: {
       pagination: {
-        pageSize: 10, // 10 itens por página por padrão
+        pageSize: 15,
       },
     },
   });
@@ -164,7 +162,7 @@ export function DataTable<TData, TValue>({
         <Pagination>
           <PaginationContent>
             <div className="flex items-center space-x-2">
-              <p className="text-sm font-medium">Linhas por página</p>
+              <p className="text-sm font-medium">Itens por página</p>
               <Select
                 value={`${table.getState().pagination.pageSize}`}
                 onValueChange={(value) => {
@@ -177,13 +175,16 @@ export function DataTable<TData, TValue>({
                   />
                 </SelectTrigger>
                 <SelectContent side="top">
-                  {[5, 10, 20, 30, 50].map((pageSize) => (
+                  {[5, 10, 15, 20, 30, 50].map((pageSize) => (
                     <SelectItem key={pageSize} value={`${pageSize}`}>
                       {pageSize}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
+              <p className="text-sm font-medium">
+                {table.getFilteredRowModel().rows.length} resultados
+              </p>
             </div>
             <PaginationItem>
               <PaginationPrevious
@@ -196,12 +197,10 @@ export function DataTable<TData, TValue>({
               />
             </PaginationItem>
 
-            {/* Números das páginas */}
             {Array.from({ length: table.getPageCount() }, (_, i) => {
               const pageNumber = i + 1;
               const currentPage = table.getState().pagination.pageIndex + 1;
 
-              // Mostra apenas algumas páginas ao redor da atual
               if (
                 pageNumber === 1 ||
                 pageNumber === table.getPageCount() ||

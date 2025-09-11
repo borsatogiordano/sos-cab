@@ -13,6 +13,9 @@ interface DialogFormProps {
   title: string;
   description: string;
   form: React.ReactNode;
+  isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  onButtonClick?: () => void;
 }
 
 export function DialogForm({
@@ -20,13 +23,21 @@ export function DialogForm({
   title,
   description,
   form,
+  isOpen,
+  onOpenChange,
+  onButtonClick,
 }: DialogFormProps) {
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="outline">{buttonText}</Button>
+        <Button
+          variant="outline"
+          onClick={onButtonClick}
+        >
+          {buttonText}
+        </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>

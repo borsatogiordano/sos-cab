@@ -35,6 +35,7 @@ export interface RideFormProps {
     observacoes?: string;
   };
   formType?: "post" | "put";
+  onSuccess?: () => void;
 }
 
 const paymentOptions = [
@@ -63,6 +64,7 @@ type RideFormData = z.infer<typeof rideFormSchema>;
 export default function RideForm({
   initialData,
   formType = "post",
+  onSuccess,
 }: RideFormProps) {
   const form = useForm<RideFormData>({
     resolver: zodResolver(rideFormSchema),
@@ -178,9 +180,17 @@ export default function RideForm({
           )}
         />
 
-        <Button onClick={() => {
-            toast.success(formType === "post" ? "Corrida registrada com sucesso!" : "Corrida atualizada com sucesso!");
-        }} type="submit" className="w-full">
+        <Button
+          onClick={() => {
+            toast.success(
+              formType === "post"
+                ? "Corrida registrada com sucesso!"
+                : "Corrida atualizada com sucesso!"
+            );
+          }}
+          type="submit"
+          className="w-full"
+        >
           {formType === "post" ? "Registrar Corrida" : "Atualizar Corrida"}
         </Button>
       </form>
