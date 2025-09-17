@@ -10,6 +10,8 @@ import { Footer } from "@/src/components/footer";
 import { ChartRadialStacked } from "../radial-chart-stacked";
 import { ChartPieDonut } from "../pie-chart-donut";
 import { useState } from "react";
+import { getServerSession } from "next-auth";
+import { useSession } from "next-auth/react";
 
 export const mockupStats: DashboardStats = {
   netProfit: {
@@ -41,7 +43,8 @@ export const mockupStats: DashboardStats = {
 
 export default function DashboardPage() {
   const [loading, setLoading] = useState(false);
-  
+
+
   return (
     <main className="h-full flex flex-1 flex-col p-1">
       <SiteHeader />

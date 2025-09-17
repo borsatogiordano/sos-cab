@@ -1,12 +1,18 @@
 import { AppSidebar } from "@/src/components/dashboard/app-sidebar";
-import { Footer } from "@/src/components/footer";
 import { SidebarInset, SidebarProvider } from "@/src/components/ui/sidebar";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession();
+
+  if (!session) {
+    redirect("/login");
+  }
   return (
     <SidebarProvider
       style={
@@ -17,10 +23,7 @@ export default function DashboardLayout({
       }
     >
       <AppSidebar variant="inset" />
-      <SidebarInset>
-        {children}
-        
-      </SidebarInset>
+      <SidebarInset>{children}</SidebarInset>
     </SidebarProvider>
   );
 }
