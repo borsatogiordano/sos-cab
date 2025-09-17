@@ -2,7 +2,6 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { AuthOptions } from "next-auth";
 import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
 import { api } from "@/src/lib/axios";
 import { LoginResponse } from "@/src/@types/auth";
 
@@ -61,15 +60,19 @@ export const authOptions: AuthOptions = {
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
+                token.userId = user.id;
                 token.accessToken = user.token;
                 token.refreshToken = user.refreshToken;
             }
             return token;
         },
         async session({ session, token }) {
-            session.accessToken = token.accessToken;
-            session.refreshToken = token.refreshToken;
-            return session;
+            return {
+                ...session,
+                accessToken: token.accessToken,
+                refreshToken: token.refreshToken,
+                userId: token.userId,
+            };
         },
     },
 };

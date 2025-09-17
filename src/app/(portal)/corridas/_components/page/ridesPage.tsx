@@ -1,16 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { SectionCards } from "@/src/app/(portal)/_components/section-cards";
+import {
+  DashboardStats,
+  SectionCards,
+} from "@/src/app/(portal)/_components/section-cards";
 import { SiteHeader } from "@/src/components/dashboard/site-header";
 import { ScrollArea } from "@/src/components/ui/scroll-area";
 import { DialogForm } from "@/src/components/dialog-form";
 import RideForm from "@/src/components/forms/post-edit-ride/post-edit-ride";
-import { BadgePlus } from "lucide-react";
-import { mockupStats } from "../../../_components/page/dashboardPage";
+import { BadgePlus, Divide } from "lucide-react";
 import { DataTable } from "@/src/components/data-table";
 import { Button } from "@/src/components/ui/button";
-import { Checkbox } from "@/src/components/ui/checkbox";
 import { Badge } from "@/src/components/ui/badge";
 import {
   DropdownMenu,
@@ -19,13 +20,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/src/components/ui/dropdown-menu";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/src/components/ui/dialog";
 import { ColumnDef } from "@tanstack/react-table";
 import {
   IconDotsVertical,
@@ -34,6 +28,7 @@ import {
   IconRoute,
 } from "@tabler/icons-react";
 import { ObservationsDialog } from "@/src/components/dialog-observations";
+import { getDashboardsStats } from "@/src/actions/dashboards-actions";
 
 // Tipo para Corridas
 export type Ride = {
@@ -264,7 +259,7 @@ const mockedRides: Ride[] = [
   },
 ];
 
-export function RidesPage() {
+export function RidesPage(stats: DashboardStats) {
   const [editingItem, setEditingItem] = useState<Ride | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [observacoesDialog, setObservacoesDialog] = useState<{
@@ -499,13 +494,15 @@ export function RidesPage() {
     );
   };
 
+  const [loading, setLoading] = useState(true);
+
   return (
     <section className="h-full flex flex-1 flex-col p-1">
       <SiteHeader />
       <ScrollArea className="h-[94dvh] p-2">
         <div className="flex flex-1 flex-col mt-6">
           <div className="@container/main flex flex-1 flex-col gap-6">
-            <SectionCards stats={mockupStats} />
+              <SectionCards stats={stats} />
             <div className="px-4 lg:px-6">
               <DataTable
                 otherButtons={TableButtons}
